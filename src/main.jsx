@@ -9,6 +9,8 @@ import About from "./pages/About";
 import Service from "./pages/Service";
 import ProductDetails from "./pages/productDetails";
 import "./index.css";
+import { Provider } from "react-redux";
+import { store } from "./Redux/store";
 // Import css files
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -25,14 +27,16 @@ const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/about", element: <About /> },
       { path: "/services", element: <Service /> },
-      { path: "/productDetails", element: <ProductDetails /> },
+      { path: "/productDetails/:id", element: <ProductDetails /> },
     ],
   },
 ]);
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router}></RouterProvider>
+    <Provider store={store}>
+      <RouterProvider router={router}></RouterProvider>
+    </Provider>
   </React.StrictMode>
 );
 // Pages

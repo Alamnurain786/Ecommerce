@@ -5,8 +5,8 @@ import axios from "axios";
 
 const ListProduct = () => {
   const [products, setProduct] = useState([]);
-  // Fetch data from API when the component mounts
 
+  // Fetch data from API when the component mounts
   useEffect(() => {
     const getProduct = async () => {
       let productData;
@@ -29,40 +29,58 @@ const ListProduct = () => {
   }, []);
 
   return (
-    <div>
-      <h1 className="bg-Accent-Charcoal text-Secondary-Platinum flex  justify-center items-center">
-        Product List
-      </h1>
-      <section className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 :grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 ">
-        {products.map((items) => (
-          <div
-            className=" flex flex-col space m-3 shadow-md border-2 border-gray-300 "
-            key={items._id}
-          >
-            <img
-              src={items.thumbnail}
-              alt=""
-              className="  object-cover h-40 "
-            />
-            <h2 className="text-Accent-Charcoal px-1 "> Name: {items.title}</h2>
-            <p className=" text-Accent-Charcoal px-1 ">
-              Desc: {items.description.slice(0, 56)}
-            </p>
-            <span className="font-bold text-Accent-Charcoal px-1 ">
-              Price: {items.price}
-            </span>
-            <div className="flex justify-between p-1">
-              <Link
-                to="/productDetails"
-                className="bg-Primary-Deep-Navy text-Secondary-Platinum w-24 p-2 rounded-md"
+    <section>
+      <div className=" px-10 py-10">
+        <h3 className=" text-fifth text-3xl font-bold uppercase mb-5">
+          Product List
+        </h3>
+        <div className="grid gap-3  sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 ">
+          {products?.map((items) => {
+            const discountedPrice =
+              items.price - (items.price * items.discountPercentage) / 100;
+            const disprice = discountedPrice.toFixed(2);
+            return (
+              <div
+                className=" product flex  shadow-xl p-3 gap-3  "
+                key={items._id}
               >
-                Read More
-              </Link>
-            </div>
-          </div>
-        ))}
-      </section>
-    </div>
+                <div className="image w-1/4">
+                  <img
+                    src={items.thumbnail}
+                    alt=""
+                    className=" size-32 object-cover rounded-md "
+                  />
+                </div>
+                <div className="info w-3/4">
+                  <div className="heading flex justify-between items-center gap-3">
+                    <h2 className="text-Accent-Charcoal text-xl font-bold   ">
+                      {" "}
+                      {items.title}
+                    </h2>
+                    <span className="">${disprice}</span>
+                  </div>
+                  <p className=" text-Accent-Charcoal text-sm opacity-70 line-clamp-2">
+                    Desc: {items.description}
+                  </p>
+
+                  <div className=" link flex gap-3">
+                    <Link
+                      to={`/productDetails/${items.id}`}
+                      className=" btn bg-Primary-Deep-Navy text-Secondary-Platinum mt-5 px-3 py-1 text-sm bg-green-500 text-white rounded-md"
+                    >
+                      Read More
+                    </Link>
+                    <button className="btn bg-Primary-Deep-Navy text-Secondary-Platinum mt-5 px-3 py-1 text-sm bg-green-500 text-white rounded-md">
+                      Add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </section>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import Header from "../Componets/Header";
 import Footer from "../Componets/Footer";
 import Home from "../pages/Home";
-import { Outlet, useLocation } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 
 const Rootlayout = () => {
   return (
