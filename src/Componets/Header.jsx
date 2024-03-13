@@ -39,7 +39,7 @@ const Header = () => {
         </nav>
         <div className="btn flex items-center gap-5">
           <Cartbtn />
-          <button className="px-4 py-2 text-Secondary-Platinum bg-sixth rounded-md ">
+          <button className="px-4 py-2 text-Secondary-Platinum bg-Green rounded-md ">
             Login
           </button>
         </div>

@@ -8,7 +8,7 @@ export default {
       "Neutral-Light-Gray": "#D3D3D3",
       "Accent-Charcoal": "#212121",
       Green: "#00b4d8",
-      red: "#ff595e",
+      red: "#ef233c",
 
       // Color Colection
       first: "#d9ed92",

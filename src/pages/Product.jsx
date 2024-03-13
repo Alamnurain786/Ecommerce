@@ -2,9 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { addToCart } from "../Redux/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const ListProduct = () => {
   const [products, setProduct] = useState([]);
+  const dispatch = useDispatch();
 
   // Fetch data from API when the component mounts
   useEffect(() => {
@@ -27,6 +32,25 @@ const ListProduct = () => {
     };
     getProduct();
   }, []);
+
+  // chech if same itmes in redux store then not add it again otherwise add into cart again or add new items
+  const { cartItems } = useSelector((state) => state.cart);
+
+  const checkInventory = (id) => {
+    return cartItems.find((item) => item.id === id);
+  };
+
+  const handleAddToCart = (item) => {
+    if (checkInventory(item.id)) {
+      // Change here
+      toast.error(`${item.title} is already in your cart`);
+    } else {
+      // Add item to Redux store
+      dispatch(addToCart(item));
+      // Show a success message
+      toast.success(`${item.title} added to cart`);
+    }
+  };
 
   return (
     <section>
@@ -70,7 +94,10 @@ const ListProduct = () => {
                     >
                       Read More
                     </Link>
-                    <button className="btn bg-Primary-Deep-Navy text-Secondary-Platinum mt-5 px-3 py-1 text-sm bg-green-500 text-white rounded-md">
+                    <button
+                      onClick={() => handleAddToCart(items)}
+                      className="btn bg-Primary-Deep-Navy text-Secondary-Platinum mt-5 px-3 py-1 text-sm bg-green-500 text-white rounded-md"
+                    >
                       Add to cart
                     </button>
                   </div>
@@ -80,6 +107,19 @@ const ListProduct = () => {
           })}
         </div>
       </div>
+      <ToastContainer
+        position="top-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+        transition:Zoom
+      />
     </section>
   );
 };

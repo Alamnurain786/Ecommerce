@@ -10,7 +10,6 @@ const SimSlider = () => {
     if (sessionStorage.getItem("productData")) {
       const productData = JSON.parse(sessionStorage.getItem("productData"));
       setProducts(productData);
-      console.log(productData);
     }
   }, []);
 
